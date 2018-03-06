@@ -13,7 +13,7 @@ export default (state = INITIAL_STATE, action) => {
     case LOAD_CUSTOMERS:
       return {
         ...state,
-        currentUser: action.payload,
+        customers: action.payload,
         filteredCustomers: action.payload
       };
     case FILTER_CUSTOMER:

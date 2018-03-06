@@ -6,6 +6,7 @@ import {
 } from './types';
 
 export const getAllCustomers = () => (dispatch) => {
+  // console.log('Customers data: ', CustomersData);
   dispatch({ type: LOAD_CUSTOMERS, payload: CustomersData });
 };
 

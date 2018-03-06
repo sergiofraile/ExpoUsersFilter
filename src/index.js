@@ -19,18 +19,19 @@ class MainView extends Component {
     });
     this.state = {
       dataSource: ds,
-      customersDataSource: ds.cloneWithRows(this.props.customers)
+      customersDataSource: ds.cloneWithRows(this.props.filteredCustomers)
     };
   }
 
   componentWillMount() {
-		// this.props.getAllCustomers();
+		this.props.getAllCustomers();
 	}
 
 	componentWillReceiveProps(newProps) {
-		if (newProps.customers !== this.props.customers) {
+		if (newProps.filteredCustomers.length !== this.props.filteredCustomers.length) {
+      console.log('Props are different');
 			this.setState({
-				customersDataSource: this.state.dataSource.cloneWithRows(newProps.customers)
+				customersDataSource: this.state.dataSource.cloneWithRows(newProps.filteredCustomers)
 			});
 		}
   }
@@ -41,19 +42,20 @@ class MainView extends Component {
 			mainText="Paco"
 			detailText="el flaco"
 		/>
-	)
+  )
 
   render() {
     return (
       <View style={universalStyles.container}>
-        <Text>This is it Paco</Text>
+        <Text>This is it</Text>
         <Text>Changes you make will automatically reload.</Text>
         <Text>Shake your phone to open the developer menu.</Text>
         <ListView
+          style={{ backgroundColor: 'blue' }}
           dataSource={this.state.customersDataSource}
           renderRow={this.renderAlertsRow}
           enableEmptySections
-          // removeClippedSubviews={false}
+          removeClippedSubviews={false}
         />
       </View>
     );
