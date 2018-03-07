@@ -1,22 +1,7 @@
 
-// import CustomersData from '../assets/customers.json';
 import {
-  EARTH_RADIUS,
-  // OFFICE_LOCATION
+  EARTH_RADIUS
 } from '../config/constants';
-
-// export const processCustomersFromFile = () => {
-//   CustomersData.forEach((customer) => {
-//     const { latitude, longitude } = customer;
-//     customer.distanceToOffice = orthodromicDistance({ latitude, longitude }, OFFICE_LOCATION);
-//   });
-//   console.log(CustomerData);
-//   return CustomersData;
-// };
-
-// const filteredCustomers = _.filter(allCustomers,
-//   (customer) => customer.distanceToOffice <= distance
-// );
 
 export const degreesToRadians = (degrees) => (
   degrees * (Math.PI / 180)
