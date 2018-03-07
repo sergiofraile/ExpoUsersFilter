@@ -10,6 +10,6 @@ export const getAllCustomers = () => (dispatch) => {
   dispatch({ type: LOAD_CUSTOMERS, payload: CustomersData });
 };
 
-// export const filterCustomers = () => (dispatch, getState) => {
+export const filterCustomers = (distance) => (dispatch, getState) => {
 
-// };
+};
