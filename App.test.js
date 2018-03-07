@@ -21,6 +21,7 @@ it('calculates the distance between two points', () => {
   const dublin = { latitude: 53.350140, longitude: -6.266155 };
   const madrid = { latitude: 40.416775, longitude: -3.703790 };
   const expectedResult = '1453';
+  // Allowing small error
   const acceptance = 0.02;
   const distance = orthodromicDistance(dublin, madrid);
 
