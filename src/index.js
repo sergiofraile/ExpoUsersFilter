@@ -18,6 +18,9 @@ import {
   INITIAL_DISTANCE
 } from './config/constants';
 
+// Main view. Renders slider to adjust distance
+// and a list with the filtered customers.
+// Predefined values are declared in config/constants
 class MainView extends Component {
 
   constructor(props) {
@@ -33,10 +36,14 @@ class MainView extends Component {
   }
 
   componentWillMount() {
+    // Initial load of the customers
 		this.props.getAllCustomers();
 	}
 
 	componentWillReceiveProps(newProps) {
+    // Updating the list of filteredCustomers everytime the array lenght changes
+    // Not best practise but only way to update the list data source when it's prop
+    // dependant
 		if (newProps.filteredCustomers.length !== this.props.filteredCustomers.length) {
 			this.setState({
 				customersDataSource: this.state.dataSource.cloneWithRows(newProps.filteredCustomers)
@@ -44,6 +51,7 @@ class MainView extends Component {
 		}
   }
 
+  // Slider valueChange function
   didValueChange = (value) => {
     this.setState({
       currentDistance: value
@@ -51,7 +59,9 @@ class MainView extends Component {
     this.props.filterCustomers(value);
   }
 
-  renderAlertsRow = (rowData) => (
+  // Method to render the customer cell
+  // Cell imported from custom components
+  renderCustomerRow = (rowData) => (
     <Cell
       cellHeight={64}
       mainText={`${rowData.user_id} - ${rowData.name}`}
@@ -81,7 +91,7 @@ class MainView extends Component {
         <ListView
           style={universalStyles.list}
           dataSource={this.state.customersDataSource}
-          renderRow={this.renderAlertsRow}
+          renderRow={this.renderCustomerRow}
           enableEmptySections
           removeClippedSubviews={false}
         />
