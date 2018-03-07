@@ -1,6 +1,6 @@
 import {
     LOAD_CUSTOMERS,
-    FILTER_CUSTOMER
+    FILTER_CUSTOMERS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -16,10 +16,10 @@ export default (state = INITIAL_STATE, action) => {
         customers: action.payload,
         filteredCustomers: action.payload
       };
-    case FILTER_CUSTOMER:
+    case FILTER_CUSTOMERS:
       return {
         ...state,
-        filteredCustomers: action.payload.cardId
+        filteredCustomers: action.payload
         };
     default:
       return state;

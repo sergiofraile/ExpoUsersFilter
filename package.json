@@ -1,8 +1,8 @@
 {
   "name": "IntercomSergio",
   "version": "0.1.0",
+  "author": "Sergio Fraile Carmena",
   "private": true,
-
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
     "start": "react-native-scripts start",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "expo": "^25.0.0",
+    "lodash": "^4.17.5",
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-redux": "^5.0.7",

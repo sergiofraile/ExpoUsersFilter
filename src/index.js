@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { 
-  Text, 
+import {
+  Text,
   View,
   ListView,
   Slider
 } from 'react-native';
 import { Cell } from './components/index';
-import { getAllCustomers } from './actions/CustomersActions';
+import {
+  getAllCustomers,
+  filterCustomers
+} from './actions/CustomersActions';
 import { universalStyles } from './styles/UniversalStyles';
-
-const MIN_DISTANCE = 0;
-const MAX_DISTANCE = 50;
+import {
+  MIN_SLIDER_DISTANCE,
+  MAX_SLIDER_DISTANCE,
+  INITIAL_DISTANCE
+} from './config/constants';
 
 class MainView extends Component {
 
@@ -21,7 +26,7 @@ class MainView extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     this.state = {
-      currentDistance: 10,
+      currentDistance: INITIAL_DISTANCE,
       dataSource: ds,
       customersDataSource: ds.cloneWithRows(this.props.filteredCustomers)
     };
@@ -33,7 +38,6 @@ class MainView extends Component {
 
 	componentWillReceiveProps(newProps) {
 		if (newProps.filteredCustomers.length !== this.props.filteredCustomers.length) {
-      console.log('Props are different');
 			this.setState({
 				customersDataSource: this.state.dataSource.cloneWithRows(newProps.filteredCustomers)
 			});
@@ -41,17 +45,17 @@ class MainView extends Component {
   }
 
   didValueChange = (value) => {
-    console.log('Did value change with value: ', value);
     this.setState({
       currentDistance: value
     });
+    this.props.filterCustomers(value);
   }
 
   renderAlertsRow = (rowData) => (
     <Cell
       cellHeight={64}
-      mainText={rowData.name}
-      detailText={`${rowData.latitude}, ${rowData.longitude}`}
+      mainText={`${rowData.user_id} - ${rowData.name}`}
+      detailText={`${rowData.distanceToOffice.toFixed(0)}km away`}
     />
   )
 
@@ -60,18 +64,18 @@ class MainView extends Component {
       <View style={universalStyles.container}>
         <View style={universalStyles.sliderContainer}>
           <Text style={[universalStyles.sliderValue, universalStyles.topText]}>
-            {`Current distance: ${this.state.currentDistance}`}
+            {`Current distance: ${this.state.currentDistance}km`}
           </Text>
-          <Slider 
-            minimumValue={MIN_DISTANCE}
-            maximumValue={MAX_DISTANCE}
+          <Slider
+            minimumValue={MIN_SLIDER_DISTANCE}
+            maximumValue={MAX_SLIDER_DISTANCE}
             step={1}
             value={this.state.currentDistance}
             onValueChange={this.didValueChange}
           />
           <View style={universalStyles.sliderValues}>
-            <Text style={universalStyles.sliderValue}>{MIN_DISTANCE}</Text>
-            <Text style={universalStyles.sliderValue}>{MAX_DISTANCE}</Text>
+            <Text style={universalStyles.sliderValue}>{MIN_SLIDER_DISTANCE}</Text>
+            <Text style={universalStyles.sliderValue}>{MAX_SLIDER_DISTANCE}</Text>
           </View>
         </View>
         <ListView
@@ -91,5 +95,5 @@ const mapStateToProps = state => {
   return { customers, filteredCustomers };
 };
 
-export default connect(mapStateToProps, { getAllCustomers })(MainView);
+export default connect(mapStateToProps, { getAllCustomers, filterCustomers })(MainView);
 

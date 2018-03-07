@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   Animated
 } from 'react-native';
@@ -14,11 +13,6 @@ class Cell extends Component {
 		cellHeight: Int => Cell height
 		mainText: String => Cell title
 		detailText: String (optional) => Cell subtitle
-    amountInt: Int (optional) => Cell right amount text. Minor units. Overrides rightText
-    amountCurrencyCode: String (optional) => Default EUR. Currency code to parse the amount
-    rightText: String (optional) => Text to display at the right side of the cell.
-                                    Won't display if there's an amount set
-    icon: Require Image (optional) => Icon has to be an image source
     cellStyle: Style object => Override styles for the cell (background color, corner radius...)
     cellShadowStyle: Style object => Overwrite styles for the shadow
     accessory: Bool (optional) => Default false. Shows or hides the chevron at the right
@@ -28,17 +22,9 @@ class Cell extends Component {
   static defaultProps = {
     cellHeight: 44,
     mainText: '',
-    amountCurrencyCode: 'EUR',
     cellStyle: {},
     cellShadowStyle: {},
-    accessory: false,
     onPress: () => {}
-  };
-
-  renderImage = () => {
-    if (this.props.icon) {
-      return <Image style={cellStyles.leftIcon} source={this.props.icon} />;
-    }
   };
 
   renderText() {
@@ -75,18 +61,6 @@ class Cell extends Component {
     );
   }
 
-  renderRightLabelText = () => {
-    if (this.props.rightText !== undefined) {
-      return (
-        <Text
-          style={cellStyles.amountText}
-        >
-          {this.props.rightText}
-        </Text>
-      );
-    }
-  };
-
   renderCellContent = () => (
     <TouchableOpacity onPress={this.props.onPress}>
       <Animated.View
@@ -104,16 +78,7 @@ class Cell extends Component {
               cellStyles.lefTextWithIconContainer
             ]}
           >
-            {this.renderImage()}
             {this.renderText()}
-          </View>
-          <View
-            style={[
-              cellStyles.textWithIconContainer,
-              cellStyles.rightTextWithIconContainer
-            ]}
-          >
-            {this.renderRightLabelText()}
           </View>
         </View>
 
